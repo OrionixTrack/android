@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">OrionixTrack</string>
+    <string name="login_card_title">Driver access</string>
+    <string name="login_card_subtitle">Sign in with your driver credentials to open trips, active route controls, and profile settings.</string>
+    <string name="field_email">Email</string>
+    <string name="field_password">Password</string>
+    <string name="placeholder_email">Enter email</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_log_out">Log out</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="error_login_invalid_email">Enter a valid email address</string>
+    <string name="error_login_invalid_credentials">Incorrect email or password</string>
+    <string name="error_network_unavailable">No internet connection</string>
+    <string name="error_network_timeout">Request timed out. Try again</string>
+    <string name="error_unexpected">Something went wrong</string>
+    <string name="dashboard_title">Dashboard</string>
+    <string name="placeholder_password">Enter your password</string>
+</resources>

@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">OrionixTrack</string>
+    <string name="login_card_title">Вхід водія</string>
+    <string name="login_card_subtitle">Увійдіть під своїми даними водія, щоб відкрити рейси, активний маршрут і налаштування профілю.</string>
+    <string name="field_email">Електронна пошта</string>
+    <string name="field_password">Пароль</string>
+    <string name="placeholder_email">Введіть електронну пошту</string>
+    <string name="action_sign_in">Увійти</string>
+    <string name="action_log_out">Вийти</string>
+    <string name="theme_system">Системна</string>
+    <string name="theme_light">Світла</string>
+    <string name="theme_dark">Темна</string>
+    <string name="error_login_invalid_email">Введіть коректну електронну пошту</string>
+    <string name="error_login_invalid_credentials">Неправильна пошта або пароль</string>
+    <string name="error_network_unavailable">Немає підключення до інтернету</string>
+    <string name="error_network_timeout">Час очікування запиту вичерпано. Спробуйте ще раз</string>
+    <string name="error_unexpected">Щось пішло не так</string>
+    <string name="dashboard_title">Дашборд</string>
+    <string name="placeholder_password">Введіть свій пароль</string>
+</resources>
