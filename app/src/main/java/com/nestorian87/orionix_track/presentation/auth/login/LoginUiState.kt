@@ -7,4 +7,5 @@ data class LoginUiState(
     val password: String = "",
     val isLoading: Boolean = false,
     val error: AppError? = null,
+    val showRequiredFieldsError: Boolean = false
 )

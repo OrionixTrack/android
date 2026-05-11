@@ -33,24 +33,24 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nestorian87.orionix_track.R
-import com.nestorian87.orionix_track.domain.error.AppError
 import com.nestorian87.orionix_track.presentation.common.components.OrionixBackdrop
 import com.nestorian87.orionix_track.presentation.common.components.OrionixLoadingDialog
 import com.nestorian87.orionix_track.presentation.common.components.OrionixLabeledTextField
 import com.nestorian87.orionix_track.presentation.common.components.OrionixPanel
 import com.nestorian87.orionix_track.presentation.common.components.OrionixPrimaryButton
+import com.nestorian87.orionix_track.presentation.common.components.OrionixSecondaryButton
 import com.nestorian87.orionix_track.presentation.common.mapper.toDefaultText
 import com.nestorian87.orionix_track.presentation.theme.OrionixTrackTheme
 
 @Composable
 fun LoginScreen(
+    onForgotPasswordClick: () -> Unit,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val uiState by loginViewModel.uiState.collectAsStateWithLifecycle()
 
-    val errorText = when (uiState.error) {
-        is AppError.Validation.InvalidEmailFormat -> stringResource(R.string.error_login_invalid_email)
-        is AppError.Auth.InvalidCredentials -> stringResource(R.string.error_login_invalid_credentials)
+    val errorText = when {
+        uiState.showRequiredFieldsError -> stringResource(R.string.error_fill_login_fields)
         else -> uiState.error?.toDefaultText()
     }
 
@@ -59,7 +59,8 @@ fun LoginScreen(
         errorText = errorText,
         onEmailChange = loginViewModel::onEmailChanged,
         onPasswordChange = loginViewModel::onPasswordChanged,
-        onLoginClick = loginViewModel::login
+        onLoginClick = loginViewModel::login,
+        onForgotPasswordClick = onForgotPasswordClick
     )
 }
 
@@ -69,7 +70,8 @@ fun LoginScreenContent(
     errorText: String?,
     onEmailChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit
+    onLoginClick: () -> Unit,
+    onForgotPasswordClick: () -> Unit
 ) {
     val focusManager = LocalFocusManager.current
     val colors = MaterialTheme.colorScheme
@@ -149,11 +151,16 @@ fun LoginScreenContent(
 
                     OrionixPrimaryButton(
                         text = stringResource(R.string.action_sign_in),
-                        enabled = !uiState.isLoading && uiState.email.isNotBlank() && uiState.password.isNotBlank(),
+                        enabled = !uiState.isLoading,
                         onClick = {
                             focusManager.clearFocus()
                             onLoginClick()
                         }
+                    )
+                    OrionixSecondaryButton(
+                        text = stringResource(R.string.action_forgot_password),
+                        onClick = onForgotPasswordClick,
+                        enabled = !uiState.isLoading
                     )
                 }
             }
@@ -172,7 +179,8 @@ private fun LoginPreview() {
             errorText = null,
             onEmailChange = {},
             onPasswordChange = {},
-            onLoginClick = {}
+            onLoginClick = {},
+            onForgotPasswordClick = {}
         )
     }
 }

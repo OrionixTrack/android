@@ -10,6 +10,7 @@ import com.nestorian87.orionix_track.data.local.dto.DriverSessionDto
 import com.nestorian87.orionix_track.data.mapper.toDomain
 import com.nestorian87.orionix_track.data.mapper.toDriverSessionDto
 import com.nestorian87.orionix_track.domain.model.AuthSession
+import com.nestorian87.orionix_track.domain.model.DriverProfile
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -38,6 +39,17 @@ class SessionLocalDataSource @Inject constructor(
         appContext.sessionDataStore.edit { prefs ->
             prefs[ACCESS_TOKEN_KEY] = session.accessToken
             prefs[DRIVER_KEY] = json.encodeToString(DriverSessionDto.serializer(), session.toDriverSessionDto())
+        }
+    }
+
+    suspend fun saveDriver(driver: DriverProfile) {
+        appContext.sessionDataStore.edit { prefs ->
+            val accessToken = prefs[ACCESS_TOKEN_KEY] ?: return@edit
+            prefs[ACCESS_TOKEN_KEY] = accessToken
+            prefs[DRIVER_KEY] = json.encodeToString(
+                DriverSessionDto.serializer(),
+                AuthSession(accessToken = accessToken, driver = driver).toDriverSessionDto()
+            )
         }
     }
 

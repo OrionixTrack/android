@@ -15,6 +15,9 @@ sealed interface AppError {
         data object Timeout : Network
     }
 
-    data class Server(val code: Int?) : AppError
+    data class Server(
+        val code: Int?,
+        val message: String? = null
+    ) : AppError
     data object Unknown : AppError
 }

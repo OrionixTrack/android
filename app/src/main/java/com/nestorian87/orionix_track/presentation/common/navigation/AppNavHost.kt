@@ -10,16 +10,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.nestorian87.orionix_track.presentation.auth.forgot.ForgotPasswordScreen
 import com.nestorian87.orionix_track.presentation.auth.login.LoginScreen
 import com.nestorian87.orionix_track.presentation.common.components.OrionixBackdrop
-import com.nestorian87.orionix_track.presentation.driver.dashboard.DriverDashboardScreen
 import com.nestorian87.orionix_track.presentation.common.app.RootAuthState
 import com.nestorian87.orionix_track.presentation.common.app.RootUiState
+import com.nestorian87.orionix_track.presentation.driver.trips.DriverTripsScreen
+import com.nestorian87.orionix_track.presentation.driver.trips.details.TripDetailsScreen
 import com.nestorian87.orionix_track.presentation.theme.AppThemeMode
 
 @Composable
@@ -61,24 +65,49 @@ fun AppNavHost(
             startDestination = AppDestination.LOGIN
         ) {
             composable(AppDestination.LOGIN) {
-                LoginScreen()
+                LoginScreen(
+                    onForgotPasswordClick = {
+                        navController.navigate(AppDestination.FORGOT_PASSWORD)
+                    }
+                )
+            }
+            composable(AppDestination.FORGOT_PASSWORD) {
+                ForgotPasswordScreen(
+                    onBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
         navigation(
             route = AppGraphRoute.MAIN,
-            startDestination = AppDestination.DASHBOARD
+            startDestination = AppDestination.TRIPS
         ) {
-            composable(AppDestination.DASHBOARD) {
+            composable(AppDestination.TRIPS) {
                 val authState = uiState.authState
                 if (authState is RootAuthState.Authenticated) {
-                    DriverDashboardScreen(
-                        session = authState.session,
-                        themeMode = uiState.themeMode,
+                    DriverTripsScreen(
+                        onTripClick = { tripId ->
+                            navController.navigate(AppDestination.tripDetails(tripId))
+                        },
                         isLogoutLoading = uiState.isLogoutLoading,
-                        onThemeModeChange = onThemeModeChange,
                         onLogout = onLogout
                     )
                 }
+            }
+            composable(
+                route = AppDestination.TRIP_DETAILS,
+                arguments = listOf(
+                    navArgument(AppDestination.TRIP_ID_ARG) {
+                        type = NavType.StringType
+                    }
+                )
+            ) {
+                TripDetailsScreen(
+                    onBack = {
+                        navController.popBackStack()
+                    }
+                )
             }
         }
     }

@@ -5,6 +5,8 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.nestorian87.orionix_track.BuildConfig
 import com.nestorian87.orionix_track.data.remote.api.AuthApi
+import com.nestorian87.orionix_track.data.remote.api.ProfileApi
+import com.nestorian87.orionix_track.data.remote.api.TripApi
 import com.nestorian87.orionix_track.data.remote.interceptor.AuthInterceptor
 import dagger.Binds
 import dagger.Module
@@ -77,6 +79,18 @@ object NetworkModule {
     fun provideAuthApi(retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideTripApi(retrofit: Retrofit): TripApi {
+        return retrofit.create(TripApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileApi(retrofit: Retrofit): ProfileApi {
+        return retrofit.create(ProfileApi::class.java)
+    }
 }
 
 @Module
@@ -87,4 +101,22 @@ abstract class RepositoryModule {
     abstract fun bindAuthRepository(
         authRepositoryImpl: com.nestorian87.orionix_track.data.repository.AuthRepositoryImpl
     ): com.nestorian87.orionix_track.domain.repository.AuthRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindTripRepository(
+        tripRepositoryImpl: com.nestorian87.orionix_track.data.repository.TripRepositoryImpl
+    ): com.nestorian87.orionix_track.domain.repository.TripRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindProfileRepository(
+        profileRepositoryImpl: com.nestorian87.orionix_track.data.repository.ProfileRepositoryImpl
+    ): com.nestorian87.orionix_track.domain.repository.ProfileRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindTripRealtimeRepository(
+        tripRealtimeRepositoryImpl: com.nestorian87.orionix_track.data.realtime.SocketIoTripRealtimeRepository
+    ): com.nestorian87.orionix_track.domain.repository.TripRealtimeRepository
 }

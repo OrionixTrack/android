@@ -8,5 +8,10 @@ object AppGraphRoute {
 
 object AppDestination {
     const val LOGIN = "auth/login"
-    const val DASHBOARD = "main/dashboard"
+    const val FORGOT_PASSWORD = "auth/forgot-password"
+    const val TRIPS = "main/trips"
+    const val TRIP_ID_ARG = "tripId"
+    const val TRIP_DETAILS = "main/trips/{$TRIP_ID_ARG}"
+
+    fun tripDetails(tripId: Long): String = "main/trips/$tripId"
 }

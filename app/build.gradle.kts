@@ -61,12 +61,16 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.okhttp.core)
     implementation(libs.okhttp.logging)
+    implementation(libs.socket.io.client) {
+        exclude(group = "org.json", module = "json")
+    }
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     testImplementation(libs.junit)

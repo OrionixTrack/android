@@ -1,5 +1,6 @@
 package com.nestorian87.orionix_track.presentation.common.components
 
+import android.graphics.drawable.ColorDrawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,11 +14,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.DialogWindowProvider
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -37,6 +42,12 @@ fun OrionixLoadingDialog(
             usePlatformDefaultWidth = false
         )
     ) {
+        val dialogWindow = (LocalView.current.parent as? DialogWindowProvider)?.window
+        SideEffect {
+            dialogWindow?.setBackgroundDrawable(ColorDrawable(Color.Transparent.toArgb()))
+            dialogWindow?.setDimAmount(0f)
+        }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
